@@ -1,0 +1,178 @@
+type Query {
+#Miembro
+    findAllMiembros: [Miembro]
+    miembroById(id: ID!): Miembro
+#Usuario
+    findAllUsuarios: [Usuario]
+    usuarioById(id: ID!): Usuario
+    usuarioByMiembroId(miembroId: ID!): Usuario
+    usuariosConMiembros: [UsuarioMiembro]
+#Evento
+    findAllEventos: [Evento]
+    eventoById(id: ID!): Evento
+    buscarEventos(criterio: String!): [Evento]
+#Asistencia
+    findAllAsistencias: [Asistencia]
+    asistenciaById(id: ID!): Asistencia
+    asistenciasPorEvento(eventoId: ID!): [Asistencia]
+    asistenciasPorEventoMiembro(eventoId: ID!): [AsistenciaMiembroEvento]
+#Cargo
+    findAllCargos: [Cargo]
+    cargoById(id: ID!): Cargo
+#Donacion
+    findAllDonacions: [Donacion]
+    donacionById(id: ID!): Donacion
+    donacionesPorEvento(eventoId: ID!): [Donacion]
+    donacionesPorEventoMiembro(eventoId: ID!): [DonacionMiembroEvento]
+#TipoDonacion
+    findAllTipoDonacions: [TipoDonacion]
+    tipoDonacionById(id: ID!): TipoDonacion
+#Ministerio
+    findAllMinisterios: [Ministerio]
+    ministerioById(id: ID!): Ministerio
+#MiembroMinisterio
+    findAllMiembroMinisterios: [MiembroMinisterio]
+    miembroMinisterioById(id: ID!): MiembroMinisterio
+    miembroMinisteriosPorMinisterio(ministerioId: ID!): [MiembroMinisterio]
+    miembroMinisteriosPorMinisterioCargo(ministerioId: ID!): [MiembroMinisterioCargo]
+}
+
+type Mutation {
+#Miembro
+    createMiembro(ci: String!, nombre: String!, apellido: String!, foto: String!, fechaNacimiento: String!, celular: String!, genero: String!): Miembro!
+    updateMiembro(id: ID!, ci: String!, nombre: String!, apellido: String!, foto: String!, fechaNacimiento: String!, celular: String!, genero: String!): Miembro!
+    deleteMiembro(id: ID!): Boolean
+    deleteMiembroUsuario(id: ID!): Boolean
+#Usuario
+    createUsuario(rol: String!, estado: String!, correo: String!, password: String!, miembroId: ID!): Usuario!
+    updateUsuario(id: ID!, rol: String!, estado: String!, correo: String!, password: String!, miembroId: ID!): Usuario!
+    deleteUsuario(id: ID!): Boolean
+#Evento
+    createEvento(nombre: String!, fecha: String!, lugar: String!): Evento!
+    updateEvento(id: ID!, nombre: String!, fecha: String!, lugar: String!): Evento!
+    deleteEvento(id: ID!): Boolean
+#Asistencia
+    createAsistencia(eventoId: ID!, miembroId: ID!): Asistencia!
+    updateAsistencia(id: ID!, eventoId: ID!, miembroId: ID!): Asistencia!
+    deleteAsistencia(id: ID!): Boolean
+#Cargo
+    createCargo(nombre: String!):Cargo!
+    updateCargo(id: ID!, nombre: String!): Cargo!
+    deleteCargo(id: ID!): Boolean
+#TipoDonacion
+    createTipoDonacion(nombre: String!): TipoDonacion!
+    updateTipoDonacion(id: ID!, nombre: String!): TipoDonacion!
+    deleteTipoDonacion(id: ID!): Boolean
+#Donacion
+    createDonacion(monto: String!, miembroId: ID!, eventoId: ID!, tipoDonacionId: ID!): Donacion!
+    updateDonacion(id: ID!, monto: String!, miembroId: ID!, eventoId: ID!, tipoDonacionId: ID!): Donacion!
+    deleteDonacion(id: ID!): Boolean
+#Ministerio
+    createMinisterio(nombre: String!, descripcion: String!): Ministerio!
+    updateMinisterio(id: ID!, nombre: String!,descripcion: String!): Ministerio!
+    deleteMinisterio(id: ID!): Boolean
+#MiembroMinisterio
+    createMiembroMinisterio(fechaInicio: String!, ministerioId:ID!, miembroId: ID!, cargoId: ID!): MiembroMinisterio!
+    finalizarMiembroMinisterio(id: ID!): Boolean
+    updateMiembroMinisterio(id: ID!, fechaInicio: String!, fechaFin: String!, ministerioId:ID!, miembroId: ID!, cargoId: ID!): MiembroMinisterio!
+    deleteMiembroMinisterio(id: ID!): Boolean
+}
+
+
+#Usuario Miembro
+type UsuarioMiembro {
+    usuario: Usuario!
+    miembro: Miembro!
+}
+#Miembro
+type Miembro {
+    id:ID
+    ci: String!
+    nombre: String!
+    apellido: String!
+    foto: String!
+    fechaNacimiento: String!
+    celular: String!
+    genero: String!
+}
+#Usuario
+type Usuario {
+    id:ID
+    rol: String!
+    estado: String!
+    correo: String!
+    password: String!
+    miembroId: ID!
+}
+#Evento
+type Evento {
+    id: ID
+    nombre: String!
+    fecha: String!
+    lugar: String!
+}
+#Asistencia
+type Asistencia {
+    id: ID
+    fecha: String!
+    eventoId: ID!
+    miembroId: ID!
+}
+#AsistenciaMiembroEvento
+type AsistenciaMiembroEvento{
+    id: ID
+    fecha: String!
+    evento: Evento!
+    miembro: Miembro!
+}
+#Cargo
+type Cargo {
+    id: ID
+    nombre: String!
+}
+#TipoDonacion
+type TipoDonacion {
+    id: ID
+    nombre: String!
+}
+#Donacion
+type Donacion {
+    id:ID
+    monto: String!
+    fecha: String!
+    miembroId: ID!
+    eventoId: ID!
+    tipoDonacionId: ID!
+}
+type DonacionMiembroEvento {
+    id:ID
+    monto: String!
+    fecha: String!
+    miembro: Miembro!
+    evento: Evento!
+    tipoDonacion: TipoDonacion!
+}
+#Ministerio
+type Ministerio {
+    id: ID
+    nombre: String!
+    descripcion: String!
+}
+#MiembroMinisterio
+type MiembroMinisterio{
+    id: ID
+    fechaInicio: String!
+    fechaFin: String!
+    miembroId: ID!
+    ministerioId: ID!
+    cargoId: ID!
+}
+#MiembroMinisterioCargo
+type MiembroMinisterioCargo{
+    id: ID
+    fechaInicio: String!
+    fechaFin: String!
+    miembro: Miembro!
+    ministerio: Ministerio!
+    cargo: Cargo!
+}
