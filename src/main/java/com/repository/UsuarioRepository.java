@@ -7,6 +7,7 @@ package com.repository;
 import com.model.Usuario;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -14,4 +15,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface UsuarioRepository extends MongoRepository<Usuario, String>{
     Optional<Usuario> findByMiembroId(String miembroId);
+    Optional<Usuario> findByUsername(String username);
 }

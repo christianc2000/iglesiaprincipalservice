@@ -4,8 +4,6 @@
  */
 package com.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -22,14 +20,8 @@ public class Evento {
 
     @Id
     private String id;
-
-    @NotBlank(message = "El nombre del evento no puede estar vacío")
     private String nombre;
-
-    @NotNull(message = "La fecha del evento no puede estar vacía")
     private String fecha;
-
-    @NotBlank(message = "El lugar del evento no puede estar vacío")
     private String lugar;
 
     public Evento() {

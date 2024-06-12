@@ -45,6 +45,19 @@ type Mutation {
     deleteMiembroUsuario(id: ID!): Boolean
 #Usuario
     createUsuario(rol: String!, estado: String!, correo: String!, password: String!, miembroId: ID!): Usuario!
+    createMiembroUsuario(
+        ci: String!,
+        nombre: String!,
+        apellido: String!,
+        foto: String,
+        fechaNacimiento: String!,
+        celular: String!,
+        genero: String!,
+        rol: String!,
+        estado: String!,
+        correo: String!,
+        password: String!
+    ): Usuario
     updateUsuario(id: ID!, rol: String!, estado: String!, correo: String!, password: String!, miembroId: ID!): Usuario!
     deleteUsuario(id: ID!): Boolean
 #Evento
@@ -100,6 +113,7 @@ type Usuario {
     id:ID
     rol: String!
     estado: String!
+    username: String!
     correo: String!
     password: String!
     miembroId: ID!

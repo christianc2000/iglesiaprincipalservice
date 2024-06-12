@@ -4,7 +4,6 @@
  */
 package com.model;
 
-import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -21,8 +20,6 @@ public class Cargo {
 
     @Id
     private String id;
-
-    @NotBlank(message = "El nombre de cargo no puede estar vacío")
     private String nombre;
 
     public Cargo() {

@@ -4,7 +4,6 @@
  */
 package com.model;
 
-import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -21,11 +20,7 @@ public class Ministerio {
 
     @Id
     private String id;
-
-    @NotBlank(message = "El nombre del ministerio no puede estar vacío")
     private String nombre;
-
-    @NotBlank(message = "El descripcion del ministerio no puede estar vacío")
     private String descripcion;
 
     public Ministerio() {
