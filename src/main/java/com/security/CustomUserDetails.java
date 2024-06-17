@@ -2,33 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.service;
+package com.security;
 
 import com.model.Usuario;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- *
- * @author USER
- */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class CustomUserDetails extends Usuario implements UserDetails {
-    Collection<? extends GrantedAuthority> authorities;
+
+    private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(Usuario usuario) {
-        this.setUsername(usuario.getUsername()); // Usa el setter heredado de Usuario
-        this.setPassword(usuario.getPassword());
-
+        super(usuario.getId(), usuario.getRol(), usuario.getEstado(), usuario.getUsername(), usuario.getCorreo(), usuario.getMiembroId(), usuario.getPassword());
         List<GrantedAuthority> auths = new ArrayList<>();
-        // Asigna el rol basado en el valor de 'rol'
         if ("A".equals(usuario.getRol())) {
             auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         } else if ("G".equals(usuario.getRol())) {
-           auths.add(new SimpleGrantedAuthority("ROLE_USER"));
+            auths.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
         this.authorities = auths;
     }

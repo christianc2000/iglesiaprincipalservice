@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+    java_app:
+        container_name: java_app
+        image: pee-java-app:1.0.0
+        build: .
+        ports:
+            - 8080:8080
+        environment:
+            - DATABASE_URL=mongodb+srv://christianc2000:PaPo9821@clusteriglesia.4epxwxo.mongodb.net/dbiglesia?retryWrites=true&w=majority&appName=ClusterIglesia
+            - SECRET=357638792F423F4428472B4B6250655368566D597133743677397A2443264629
+            - EXPIRATION=3600000
+
+        

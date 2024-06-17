@@ -4,8 +4,11 @@
  */
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  *
@@ -13,9 +16,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+
 public class UsuarioMiembro {
-
-    private Usuario usuario;
+ @Id
+    private String id;
+    private String rol;
+    private String estado;
+    private String username;
+    private String correo;
     private Miembro miembro;
-
 }

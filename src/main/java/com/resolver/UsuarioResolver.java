@@ -48,6 +48,27 @@ public class UsuarioResolver implements GraphQLQueryResolver, GraphQLMutationRes
     }
 
     @QueryMapping
+    public Optional<UsuarioMiembro> usuarioMiembroById(@Argument String id) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+        if (optionalUsuario.isPresent()) {
+            Usuario u = optionalUsuario.get();
+            Optional<Miembro> optionalMiembro = miembroRepository.findById(u.getMiembroId());
+            if (optionalMiembro.isPresent()) {
+                Miembro m = optionalMiembro.get();
+                UsuarioMiembro um = new UsuarioMiembro();
+                um.setId(u.getId());
+                um.setUsername(u.getUsername());
+                um.setCorreo(u.getCorreo());
+                um.setEstado(u.getEstado());
+                um.setRol(u.getRol());
+                um.setMiembro(m);
+                return Optional.of(um);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @QueryMapping
     public Optional<Usuario> usuarioByMiembroId(@Argument String miembroId) {
         return usuarioRepository.findByMiembroId(miembroId);
     }
@@ -59,11 +80,13 @@ public class UsuarioResolver implements GraphQLQueryResolver, GraphQLMutationRes
         List<Usuario> usuarios = usuarioRepository.findAll();
         for (Usuario usuario : usuarios) {
             UsuarioMiembro usuarioMiembro = new UsuarioMiembro();
-            usuarioMiembro.setUsuario(usuario);
-
+            usuarioMiembro.setId(usuario.getId());
+            usuarioMiembro.setCorreo(usuario.getCorreo());
+            usuarioMiembro.setEstado(usuario.getEstado());
+            usuarioMiembro.setRol(usuario.getRol());
+            usuarioMiembro.setUsername(usuario.getUsername());
             Miembro miembro = miembroRepository.findById(usuario.getMiembroId()).orElse(null);
             usuarioMiembro.setMiembro(miembro);
-
             usuariosConMiembros.add(usuarioMiembro);
         }
 
